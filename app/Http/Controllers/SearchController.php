@@ -25,10 +25,10 @@ class SearchController extends Controller {
 		$data = [];
 
 		foreach ($fields as $field) {
-			$value = $request->json($field);
+			$value = $request->input($field);
 
 			if (isset($value)) {
-				$data[$field] = trim($request->json($field));
+				$data[$field] = trim($request->input($field));
 			}
 		}
  	
