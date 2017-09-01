@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://getbootstrap.com/docs/4.0/examples/starter-template/starter-template.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -80,12 +81,16 @@
 							<tr id="emptyRow">
 								<td colspan="7" class="text-center">No results to display.</td>
 							</tr>
+							<tr id="loadingRow">
+								<td colspan="7" class="text-center"><i class="fa fa-spinner fa-spin"></i></td>
+							</tr>
 						</tbody>
 					</table>
         </div>
     </body>
 
     <script type="text/javascript"> 
+    	$('#loadingRow').hide()
 
 	    $("#submitBtn").click(function(e) {
 	    	let postData = {
@@ -105,6 +110,13 @@
 					dataType: 'json',
 					method: 'POST',
 
+					beforeSend: function () {
+						$("#emptyRow").hide()  
+		        $('#loadingRow').show()
+			    },
+			    complete: function () {
+		        $('#loadingRow').hide()
+			    },
 					success: function (response) {
 						showTableResults(response.data)             
 					}
